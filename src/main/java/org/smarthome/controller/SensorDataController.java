@@ -1,5 +1,9 @@
 package org.smarthome.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.smarthome.entity.TemperatureSensorMeasurement;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +27,21 @@ public class SensorDataController {
 			consumes = "application/json")
     public @ResponseBody TemperatureSensorMeasurement addTemperatureMeasurement(@RequestBody TemperatureSensorMeasurement t) {
        	System.out.println("received POST!");
+       	//TODO persist measurement
        	return t;
+    }
+	
+	@RequestMapping(value = "/temperature", 
+			method = RequestMethod.GET, 
+			produces = "application/json")
+    public @ResponseBody List<TemperatureSensorMeasurement> getAllTemperatureMeasurements() {
+       	System.out.println("received GET!");
+       	//TODO load persisted measurements
+       	TemperatureSensorMeasurement t1 = new TemperatureSensorMeasurement(27);
+       	TemperatureSensorMeasurement t2 = new TemperatureSensorMeasurement(42);
+       	List<TemperatureSensorMeasurement> results = new ArrayList<TemperatureSensorMeasurement>();
+       	results.add(t1);
+       	results.add(t2);
+       	return results;
     }
 }
