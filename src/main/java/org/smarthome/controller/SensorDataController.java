@@ -3,6 +3,7 @@ package org.smarthome.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.time.*;
 
 import org.smarthome.entity.TemperatureSensorMeasurement;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,7 @@ public class SensorDataController {
 			produces = "application/json",
 			consumes = "application/json")
     public @ResponseBody TemperatureSensorMeasurement addTemperatureMeasurement(@RequestBody TemperatureSensorMeasurement t) {
-       	System.out.println("received POST!");
+       	System.out.println("received measurement: " + LocalTime.now() + "	temp: " + t.getTemp() + ", humidity: " + t.getHumidity());
        	//TODO persist measurement
        	return t;
     }
@@ -37,8 +38,8 @@ public class SensorDataController {
     public @ResponseBody List<TemperatureSensorMeasurement> getAllTemperatureMeasurements() {
        	System.out.println("received GET!");
        	//TODO load persisted measurements
-       	TemperatureSensorMeasurement t1 = new TemperatureSensorMeasurement(27);
-       	TemperatureSensorMeasurement t2 = new TemperatureSensorMeasurement(42);
+       	TemperatureSensorMeasurement t1 = new TemperatureSensorMeasurement(27, 43);
+       	TemperatureSensorMeasurement t2 = new TemperatureSensorMeasurement(26, 56);
        	List<TemperatureSensorMeasurement> results = new ArrayList<TemperatureSensorMeasurement>();
        	results.add(t1);
        	results.add(t2);

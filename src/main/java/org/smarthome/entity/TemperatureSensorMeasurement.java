@@ -8,21 +8,29 @@ package org.smarthome.entity;
  */
 public class TemperatureSensorMeasurement {
 
-	private int value;
+	private int temp;
+	private int humidity;
 	
 	public TemperatureSensorMeasurement() {
 		
 	}
 	
-	public TemperatureSensorMeasurement(int value) {
-		this.value = value;
+	public TemperatureSensorMeasurement(int temp, int humidity) {
+		this.temp = temp;
+		this.humidity = humidity;
 	}
 
 	/**
-	 * @return the value
+	 * @return the temp value
 	 */
-	public int getValue() {
-		return value;
+	public int getTemp() {
+		return temp;
 	}
 
+	/**
+	 * @return the humidity value
+	 */
+	public int getHumidity() {
+		return humidity;
+	}
 }
