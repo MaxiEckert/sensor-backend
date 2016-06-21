@@ -1,5 +1,9 @@
 package org.smarthome.entity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * This class models a temperature measurement.
  * 
@@ -11,13 +15,16 @@ public class TemperatureSensorMeasurement {
 	private int temp;
 	private int humidity;
 	
+	private long timestamp; 
+	
 	public TemperatureSensorMeasurement() {
 		
 	}
 	
-	public TemperatureSensorMeasurement(int temp, int humidity) {
+	public TemperatureSensorMeasurement(int temp, int humidity, long timestamp) {
 		this.temp = temp;
 		this.humidity = humidity;
+		this.timestamp = timestamp;
 	}
 
 	/**
@@ -32,5 +39,17 @@ public class TemperatureSensorMeasurement {
 	 */
 	public int getHumidity() {
 		return humidity;
+	}
+	
+	/**
+	 * @return the timestamp value
+	 */
+	public long getTimestamp() {
+		return timestamp;
+	}
+	
+	public String getTimeString() {
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		return df.format(timestamp);
 	}
 }

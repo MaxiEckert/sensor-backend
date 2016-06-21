@@ -2,10 +2,12 @@ package org.smarthome.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.time.*;
 
 import org.smarthome.entity.TemperatureSensorMeasurement;
+import org.smarthome.repository.InfluxTemperatureMeasurementRepository;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,8 +30,13 @@ public class SensorDataController {
 			consumes = "application/json")
     public @ResponseBody TemperatureSensorMeasurement addTemperatureMeasurement(@RequestBody TemperatureSensorMeasurement t) {
        	System.out.println("received measurement: " + LocalTime.now() + "	temp: " + t.getTemp() + ", humidity: " + t.getHumidity());
-       	//TODO persist measurement
-       	return t;
+       	
+       	TemperatureSensorMeasurement m = new TemperatureSensorMeasurement(t.getTemp(), t.getHumidity(), System.currentTimeMillis());
+       	
+       	InfluxTemperatureMeasurementRepository repo = InfluxTemperatureMeasurementRepository.createTemperatureMeasurementRepository();
+       	repo.save(m);
+       	
+       	return m;
     }
 	
 	@RequestMapping(value = "/temperature", 
@@ -38,8 +45,8 @@ public class SensorDataController {
     public @ResponseBody List<TemperatureSensorMeasurement> getAllTemperatureMeasurements() {
        	System.out.println("received GET!");
        	//TODO load persisted measurements
-       	TemperatureSensorMeasurement t1 = new TemperatureSensorMeasurement(27, 43);
-       	TemperatureSensorMeasurement t2 = new TemperatureSensorMeasurement(26, 56);
+       	TemperatureSensorMeasurement t1 = new TemperatureSensorMeasurement(27, 43, System.currentTimeMillis());
+       	TemperatureSensorMeasurement t2 = new TemperatureSensorMeasurement(26, 56, System.currentTimeMillis());
        	List<TemperatureSensorMeasurement> results = new ArrayList<TemperatureSensorMeasurement>();
        	results.add(t1);
        	results.add(t2);
